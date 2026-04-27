@@ -1,0 +1,1517 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GAS COOL - نموذج طلب شغل وظيفة</title>
+  <style>
+    :root {
+      --primary: #1A3F8F;
+      --primary-dark: #112B6A;
+      --primary-light: #2A5AB5;
+      --primary-soft: #E8EEF9;
+      --green: #2D8A3E;
+      --green-dark: #1E6128;
+      --green-soft: #E8F5EA;
+      --red: #C9302C;
+      --red-dark: #8A1F1C;
+      --red-soft: #FDECEA;
+      --bg: #F5F7FC;
+      --surface: #FFFFFF;
+      --border: #C5D3E8;
+      --text-main: #1A2540;
+      --text-muted: #526080;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+      color: var(--text-main);
+    }
+
+    .app {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 12px;
+    }
+
+    .header {
+      background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 55%, var(--primary-light) 100%);
+      border-radius: 14px 14px 0 0;
+      padding: 14px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .logo-box {
+      width: 100px;
+      height: 78px;
+      border-radius: 12px;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary-dark);
+      font-weight: 800;
+      font-size: 18px;
+      box-shadow: 0 2px 10px rgba(0,0,0,.18);
+      flex-shrink: 0;
+    }
+
+    .title-main {
+      font-size: 16px;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.5;
+    }
+
+    .title-sub {
+      font-size: 11.5px;
+      color: rgba(255,255,255,.75);
+      margin-top: 4px;
+    }
+
+    .icon-btn {
+      background: rgba(255,255,255,.15);
+      border: 1px solid rgba(255,255,255,.3);
+      border-radius: 8px;
+      padding: 6px 10px;
+      cursor: pointer;
+      color: #fff;
+      font-size: 18px;
+    }
+
+    .config {
+      display: none;
+      background: var(--primary-soft);
+      padding: 14px 20px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .config.show { display: block; }
+
+    .info-box {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+      font-size: 11.5px;
+      color: var(--text-muted);
+      line-height: 1.9;
+    }
+
+    .config-row {
+      display: flex;
+      gap: 8px;
+    }
+
+    .config-row input {
+      flex: 1;
+      direction: ltr;
+    }
+
+    .steps-bar {
+      background: var(--primary-dark);
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+    }
+
+    .step-wrap {
+      display: flex;
+      align-items: center;
+      flex: 1;
+    }
+
+    .step-wrap:last-child { flex: 0; }
+
+    .step-dot {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      border: 1.5px solid rgba(255,255,255,.25);
+      color: rgba(255,255,255,.6);
+      background: transparent;
+      transition: .25s;
+      flex-shrink: 0;
+    }
+
+    .step-dot.active {
+      background: #fff;
+      border-color: #fff;
+      color: var(--primary-dark);
+    }
+
+    .step-dot.done {
+      background: var(--green);
+      border-color: var(--green);
+      color: #fff;
+    }
+
+    .step-line {
+      flex: 1;
+      height: 1.5px;
+      margin: 0 6px;
+      background: rgba(255,255,255,.15);
+    }
+
+    .step-line.done { background: var(--green); }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-top: none;
+      border-radius: 0 0 14px 14px;
+      padding: 22px;
+      min-height: 460px;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 18px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid var(--green-soft);
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .section-title .bar {
+      width: 4px;
+      height: 20px;
+      border-radius: 2px;
+      background: var(--green);
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .full { grid-column: 1 / -1; }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .field label {
+      font-size: 12px;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .req { color: var(--red); }
+
+    input, select, textarea {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 8px 11px;
+      font-size: 13px;
+      font-family: inherit;
+      direction: rtl;
+      color: var(--text-main);
+      background: #fff;
+      outline: none;
+      width: 100%;
+    }
+
+    textarea {
+      min-height: 72px;
+      resize: vertical;
+    }
+
+    .divider {
+      border: none;
+      border-top: 1px solid #EBF4F7;
+      margin: 16px 0;
+    }
+
+    .sub-title {
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--primary-dark);
+      margin: 14px 0 8px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12.5px;
+    }
+
+    th {
+      background: var(--primary);
+      color: rgba(255,255,255,.95);
+      padding: 8px 9px;
+      text-align: right;
+      font-weight: 600;
+      font-size: 11.5px;
+    }
+
+    td {
+      padding: 5px 8px;
+      border-bottom: 1px solid #EBF4F7;
+    }
+
+    td input {
+      border: none;
+      background: transparent;
+      padding: 3px;
+      font-size: 12px;
+    }
+
+    tr:nth-child(even) td { background: #F7FBFC; }
+
+    .num-cell {
+      text-align: center;
+      color: var(--text-muted);
+      font-weight: 700;
+      width: 32px;
+    }
+
+    .seq-box, .choice-display, .wheel-box {
+      background: var(--green-soft);
+      border-radius: 8px;
+      padding: 10px 14px;
+      margin-bottom: 10px;
+    }
+
+    .seq-box {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--primary-dark);
+      letter-spacing: 3px;
+      text-align: center;
+      direction: ltr;
+      font-family: monospace;
+    }
+
+    .choice-display {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--primary);
+      text-align: center;
+      direction: ltr;
+    }
+
+    .matrix {
+      display: grid;
+      gap: 2px;
+      direction: ltr;
+      margin-bottom: 10px;
+      justify-content: start;
+    }
+
+    .matrix-cell {
+      width: 42px;
+      height: 34px;
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #fff;
+      font-size: 13px;
+      font-weight: 600;
+      font-family: monospace;
+    }
+
+    .matrix-cell.missing {
+      border-style: dashed;
+      border-color: var(--red);
+      background: var(--red-soft);
+      color: var(--red);
+    }
+
+    .wheel-grid {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .wheel-card {
+      flex: 1;
+      min-width: 130px;
+    }
+
+    .wheel-label {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-bottom: 5px;
+      font-weight: 600;
+    }
+
+    .wheel-mini {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 4px;
+      direction: ltr;
+      text-align: center;
+    }
+
+    .wheel-item {
+      padding: 5px 4px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      background: #fff;
+      color: var(--primary);
+      border: 1px solid var(--border);
+    }
+
+    .wheel-item.center {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    .wheel-item.missing {
+      background: var(--red-soft);
+      color: var(--red-dark);
+      border-style: dashed;
+      border-color: var(--red);
+    }
+
+    .options-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .option-card {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      padding: 9px 12px;
+      border-radius: 8px;
+      border: 1.5px solid var(--border);
+      cursor: pointer;
+      font-size: 13px;
+      background: #fff;
+      transition: .18s;
+      user-select: none;
+    }
+
+    .option-card.selected {
+      background: #EBF4F8;
+      border-color: var(--primary);
+    }
+
+    .option-card.correct {
+      background: #EAF7EE;
+      border-color: var(--green);
+      color: #1B5E3B;
+    }
+
+    .option-card.wrong {
+      background: var(--red-soft);
+      border-color: var(--red);
+      color: #8B0000;
+    }
+
+    .dot {
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+      border: 2px solid var(--border);
+      background: transparent;
+      flex-shrink: 0;
+    }
+
+    .dot.selected { border-color: var(--primary); background: var(--primary); }
+    .dot.correct { border-color: var(--green); background: var(--green); }
+    .dot.wrong { border-color: var(--red); background: var(--red); }
+
+    .explain {
+      font-size: 11.5px;
+      color: var(--text-muted);
+      padding: 8px 10px;
+      background: var(--bg);
+      border-radius: 6px;
+      margin-top: 8px;
+      border-right: 3px solid var(--green);
+    }
+
+
+    .iq-timer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      background: var(--primary-soft);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px 14px;
+      margin-bottom: 14px;
+      color: var(--primary-dark);
+      font-weight: 700;
+      font-size: 13px;
+    }
+
+    .iq-timer .time {
+      direction: ltr;
+      font-family: monospace;
+      font-size: 20px;
+      color: var(--red-dark);
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 5px 10px;
+      min-width: 78px;
+      text-align: center;
+    }
+
+    .iq-locked {
+      background: var(--red-soft);
+      border: 1px solid var(--red);
+      color: var(--red-dark);
+      border-radius: 8px;
+      padding: 10px 12px;
+      margin-bottom: 12px;
+      font-size: 12.5px;
+      line-height: 1.7;
+    }
+
+    .score-panel {
+      background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+      border-radius: 12px;
+      padding: 18px;
+      display: flex;
+      gap: 18px;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .score-big {
+      font-size: 52px;
+      font-weight: 700;
+      color: var(--green);
+      line-height: 1;
+    }
+
+    .score-split {
+      color: rgba(255,255,255,.4);
+      font-size: 20px;
+      align-self: flex-end;
+    }
+
+    .score-meta {
+      flex: 1;
+      color: rgba(255,255,255,.8);
+    }
+
+    .score-grade {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--green);
+      margin-top: 4px;
+    }
+
+    .progress {
+      height: 8px;
+      background: rgba(255,255,255,.15);
+      border-radius: 4px;
+      margin-top: 10px;
+      overflow: hidden;
+    }
+
+    .progress > div {
+      height: 100%;
+      background: var(--green);
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .stat {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 13px;
+    }
+
+    .stat-label {
+      font-size: 11px;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .stat-value {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--primary-dark);
+      margin-top: 4px;
+    }
+
+    .alert {
+      border-radius: 8px;
+      padding: 12px 14px;
+      margin-bottom: 12px;
+      font-size: 13px;
+    }
+
+    .alert.success {
+      background: var(--green-soft);
+      border: 1px solid var(--green);
+      color: var(--green-dark);
+    }
+
+    .alert.error {
+      background: var(--red-soft);
+      border: 1px solid var(--red);
+      color: var(--red);
+    }
+
+    .note-box {
+      background: var(--green-soft);
+      border: 1px solid rgba(45,138,62,.25);
+      border-radius: 8px;
+      padding: 11px 13px;
+      font-size: 12px;
+      color: var(--green-dark);
+      margin-bottom: 16px;
+    }
+
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 22px;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 9px 22px;
+      border-radius: 9px;
+      font-size: 13px;
+      font-family: inherit;
+      cursor: pointer;
+      font-weight: 700;
+      border: none;
+    }
+
+    .btn.primary { background: var(--primary); color: #fff; }
+    .btn.prev { background: #fff; color: var(--primary); border: 1.5px solid var(--border); }
+    .btn.accent { background: var(--green); color: #fff; }
+    .btn:disabled { opacity: .6; cursor: not-allowed; }
+
+    .step-info {
+      text-align: center;
+      font-size: 11.5px;
+      color: var(--text-muted);
+      margin-top: 8px;
+    }
+
+    .page { display: none; }
+    .page.active { display: block; }
+
+    @media (max-width: 768px) {
+      .grid-2, .stats-grid, .options-grid {
+        grid-template-columns: 1fr;
+      }
+      .header {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .brand { align-items: flex-start; }
+      .config-row { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <div class="header">
+      <div class="brand">
+        <div class="logo-box">GAS COOL</div>
+        <div>
+          <div class="title-main">الشركة المصرية لمشروعات الطاقة والتبريد — جاس كول</div>
+          <div class="title-sub">نموذج طلب شغل وظيفة | GC-P-11/F2 | إصدار ٢٠١٥/٥/٥</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="steps-bar" id="stepsBar"></div>
+
+    <div class="card">
+      <div class="page active" id="page-0"></div>
+      <div class="page" id="page-1"></div>
+      <div class="page" id="page-2"></div>
+      <div class="page" id="page-3"></div>
+      <div class="page" id="page-4"></div>
+      <div class="page" id="page-5"></div>
+    </div>
+
+    <div class="step-info" id="stepInfo"></div>
+  </div>
+
+  <script>
+    const GASCOOL_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwdnVQZw_EOcexKEsrzMZjzt3D2l-bbw46dUwvKGz9AEXHEbS2fwVTsyuFHKSerMt75/exec";
+
+    const STEPS = [
+      "البيانات الشخصية",
+      "المؤهل والخبرات",
+      "اللغات والمهارات",
+      "المراجع والأقارب",
+      "اختبار الذكاء",
+      "ملخص التقديم",
+    ];
+
+    const IQ_QUESTIONS = [
+      {
+        id: 1,
+        q: "What number should replace the question mark in the sequence?",
+        type: "seq",
+        seq: "0   1   2   4   6   9   12   16   ?",
+        opts: ["18", "20", "22", "21"],
+        ans: 1,
+        exp: "Differences increase in pairs: +1,+1,+2,+2,+3,+3,+4,+4 — so 16+4 = 20",
+      },
+      {
+        id: 2,
+        q: "What is the missing section from the matrix? (3 values missing)",
+        type: "matrix4x4",
+        matrix: [
+          [20, 22, 19, 21],
+          [17, 19, 16, "?"],
+          [19, 21, "?", 20],
+          [16, 18, 15, "?"],
+        ],
+        opts: [
+          "A : 18 , 18 , 17",
+          "B : 19 , 18 , 19",
+          "C : 17 , 17 , 19",
+          "D : 18 , 17 , 18",
+        ],
+        ans: 0,
+        exp: "Each column follows −3, +2, −3. Missing: row2/col4=18, row3/col3=18, row4/col4=17",
+      },
+      {
+        id: 3,
+        q: "What number should replace the question mark?",
+        type: "matrix3x3",
+        matrix: [
+          [9, 7, 2],
+          [5, 7, 6],
+          [4, 6, "?"],
+        ],
+        opts: ["6", "7", "8", "9"],
+        ans: 2,
+        exp: "Each row sums to 18 — Row 3: 4+6+? = 18, so ? = 8",
+      },
+      {
+        id: 4,
+        q: "What numbers replace the question marks? (Rule: A × E + C = Center)",
+        type: "wheel",
+        wheels: [
+          { A: 14, C: 2, E: 5, center: 72, label: "Example 1" },
+          { A: 28, C: 2, E: 5, center: 142, label: "Example 2" },
+          { A: 6, C: "?", E: "?", center: "?", label: "Find ?" },
+        ],
+        opts: [
+          "C=3, E=4, Center=27",
+          "C=4, E=3, Center=22",
+          "C=5, E=2, Center=17",
+          "C=2, E=5, Center=32",
+        ],
+        ans: 3,
+        exp: "14×5+2=72 ✓ | 28×5+2=142 ✓ | So E=5, C=2, Center=6×5+2=32 ✓",
+      },
+      {
+        id: 5,
+        q: "What number comes next in the sequence?",
+        type: "seq",
+        seq: "3   6   11   18   27   38   ?",
+        opts: ["48", "51", "50", "49"],
+        ans: 1,
+        exp: "Differences +3,+5,+7,+9,+11,+13 — so 38+13 = 51",
+      },
+      {
+        id: 6,
+        q: "What number completes this magic square? (Every row, column & diagonal = 15)",
+        type: "matrix3x3",
+        matrix: [
+          [4, 9, 2],
+          [3, 5, 7],
+          [8, 1, "?"],
+        ],
+        opts: ["4", "5", "6", "7"],
+        ans: 2,
+        exp: "Column 3: 2+7+? = 15, so ? = 6",
+      },
+      {
+        id: 7,
+        q: "Which calculation gives the highest result?",
+        type: "choice",
+        display: "½ ÷ ¼     |     ⅓ × 6     |     √16     |     2³ ÷ 2",
+        opts: ["½ ÷ ¼ = 2", "⅓ × 6 = 2", "√16 = 4", "2³ ÷ 2 = 4"],
+        ans: 2,
+        exp: "The highest result is 4. In this set, √16 = 4.",
+      },
+      {
+        id: 8,
+        q: "Which group of letters has a gap in the alphabetical order?",
+        type: "choice",
+        opts: ["ABCD", "EFHI", "JKLM", "NOPQ"],
+        ans: 1,
+        exp: "EFHI is missing letter G between F and H.",
+      },
+    ];
+
+    const IQ_TIME_LIMIT_SECONDS = 10 * 60;
+
+    const state = {
+      cur: 0,
+      personal: {
+        nat: "مصرية",
+        rel: "مسلم",
+        marital: "أعزب",
+        mil: "أدى الخدمة",
+        svc: "أدى",
+      },
+      education: {},
+      languages: {},
+      references: {},
+      iqAns: {},
+      iqDone: false,
+      iqStarted: false,
+      iqTimeLeft: IQ_TIME_LIMIT_SECONDS,
+      iqTimerId: null,
+      iqLocked: false,
+      scriptUrl: GASCOOL_SCRIPT_URL,
+      sendStatus: "idle",
+      sendError: "",
+    };
+
+    const $ = (id) => document.getElementById(id);
+
+    function escapeHtml(str = "") {
+      return String(str).replace(/[&<>"']/g, (m) => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+      }[m]));
+    }
+
+    function scoreIQ() {
+      return IQ_QUESTIONS.filter((q, i) => state.iqAns[i] === q.ans).length;
+    }
+
+    function gradeIQ(score) {
+      if (score >= 8) return "Excellent";
+      if (score >= 6) return "Very Good";
+      if (score >= 5) return "Good";
+      return "Needs Review";
+    }
+
+    function pctIQ(score) {
+      return Math.round((score / IQ_QUESTIONS.length) * 100);
+    }
+
+
+    function formatIQTime(seconds) {
+      const safeSeconds = Math.max(0, Number(seconds) || 0);
+      const mins = String(Math.floor(safeSeconds / 60)).padStart(2, "0");
+      const secs = String(safeSeconds % 60).padStart(2, "0");
+      return `${mins}:${secs}`;
+    }
+
+    function startIQTimer() {
+      if (state.iqDone || state.iqTimerId) return;
+      state.iqStarted = true;
+      state.iqTimerId = setInterval(() => {
+        state.iqTimeLeft -= 1;
+        const timerEl = $("iqTimerValue");
+        if (timerEl) timerEl.textContent = formatIQTime(state.iqTimeLeft);
+
+        if (state.iqTimeLeft <= 0) {
+          submitIQ(true);
+        }
+      }, 1000);
+    }
+
+    function stopIQTimer() {
+      if (state.iqTimerId) {
+        clearInterval(state.iqTimerId);
+        state.iqTimerId = null;
+      }
+    }
+
+    function setField(group, key, value) {
+      state[group][key] = value;
+    }
+
+    function ensureArray(group, key, size) {
+      if (!state[group][key]) state[group][key] = Array.from({ length: size }, () => ({}));
+    }
+
+    function setArrayField(group, arrKey, index, key, value, size) {
+      ensureArray(group, arrKey, size);
+      state[group][arrKey][index][key] = value;
+    }
+
+    function renderSteps() {
+      const bar = $("stepsBar");
+      bar.innerHTML = "";
+      STEPS.forEach((label, i) => {
+        const wrap = document.createElement("div");
+        wrap.className = "step-wrap";
+
+        const dot = document.createElement("div");
+        dot.className = "step-dot" + (i < state.cur ? " done" : i === state.cur ? " active" : "");
+        dot.textContent = i < state.cur ? "✓" : i + 1;
+        dot.title = label;
+        dot.onclick = () => {
+          if (state.iqLocked && i === 4 && state.cur > 4) return;
+          if (i <= 4 || state.iqDone || i < state.cur) {
+            state.cur = i;
+            renderAll();
+          }
+        };
+        wrap.appendChild(dot);
+
+        if (i < STEPS.length - 1) {
+          const line = document.createElement("div");
+          line.className = "step-line" + (i < state.cur ? " done" : "");
+          wrap.appendChild(line);
+        }
+
+        bar.appendChild(wrap);
+      });
+
+      $("stepInfo").textContent = `الخطوة ${state.cur + 1} من ${STEPS.length} — ${STEPS[state.cur]}`;
+    }
+
+
+    function navHtml() {
+      return `
+        <div class="nav">
+          ${state.cur > 0 ? `<button class="btn prev" onclick="goStep(-1)">→ السابق</button>` : `<div></div>`}
+          ${state.cur < STEPS.length - 1 ? `<button class="btn primary" onclick="goStep(1)">التالي ←</button>` : `<div></div>`}
+        </div>
+      `;
+    }
+
+    function goStep(dir) {
+      const nextStep = Math.max(0, Math.min(STEPS.length - 1, state.cur + dir));
+
+      // بعد تسليم اختبار الذكاء والانتقال للملخص، لا يمكن الرجوع للاختبار مرة أخرى.
+      if (state.iqLocked && state.cur === 5 && nextStep === 4) return;
+
+      state.cur = nextStep;
+      renderAll();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function sectionTitle(text, extra = "") {
+      return `
+        <div class="section-title">
+          <div class="bar"></div>
+          <div>${text}${extra}</div>
+        </div>
+      `;
+    }
+
+    function renderPage0() {
+      $("page-0").innerHTML = `
+        ${sectionTitle("البيانات الشخصية")}
+        <div class="grid-2">
+          <div class="field full">
+            <label>الاسم بالكامل <span class="req">*</span></label>
+            <input value="${escapeHtml(state.personal.name || "")}" oninput="setField('personal','name',this.value)">
+          </div>
+
+          <div class="field">
+            <label>الجنسية</label>
+            <select onchange="setField('personal','nat',this.value)">
+              <option ${state.personal.nat === "مصرية" ? "selected" : ""}>مصرية</option>
+              <option ${state.personal.nat === "أخرى" ? "selected" : ""}>أخرى</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label>الديانة</label>
+            <select onchange="setField('personal','rel',this.value)">
+              <option ${state.personal.rel === "مسلم" ? "selected" : ""}>مسلم</option>
+              <option ${state.personal.rel === "مسيحي" ? "selected" : ""}>مسيحي</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label>تاريخ الميلاد</label>
+            <input type="date" value="${escapeHtml(state.personal.dob || "")}" oninput="setField('personal','dob',this.value)">
+          </div>
+
+          <div class="field">
+            <label>جهة الميلاد</label>
+            <input value="${escapeHtml(state.personal.bplace || "")}" oninput="setField('personal','bplace',this.value)">
+          </div>
+
+          <div class="field full">
+            <label>محل الإقامة</label>
+            <input value="${escapeHtml(state.personal.addr || "")}" oninput="setField('personal','addr',this.value)">
+          </div>
+
+          <div class="field">
+            <label>الحالة الاجتماعية</label>
+            <select onchange="setField('personal','marital',this.value)">
+              <option ${state.personal.marital === "أعزب" ? "selected" : ""}>أعزب</option>
+              <option ${state.personal.marital === "متزوج" ? "selected" : ""}>متزوج</option>
+              <option ${state.personal.marital === "مطلق" ? "selected" : ""}>مطلق</option>
+              <option ${state.personal.marital === "أرمل" ? "selected" : ""}>أرمل</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label>رقم التليفون</label>
+            <input type="tel" value="${escapeHtml(state.personal.phone || "")}" oninput="setField('personal','phone',this.value)">
+          </div>
+
+          <div class="field">
+            <label>الرقم القومي</label>
+            <input value="${escapeHtml(state.personal.nid || "")}" oninput="setField('personal','nid',this.value)">
+          </div>
+
+          <div class="field">
+            <label>الوظيفة المطلوب شغلها <span class="req">*</span></label>
+            <input value="${escapeHtml(state.personal.job || "")}" oninput="setField('personal','job',this.value)">
+          </div>
+
+          <div class="field">
+            <label>المعاملة العسكرية</label>
+            <select onchange="setField('personal','mil',this.value)">
+              ${["أدى الخدمة","معفى","مؤجل","لم يبلغ السن"].map(v => `<option ${state.personal.mil === v ? "selected":""}>${v}</option>`).join("")}
+            </select>
+          </div>
+
+          <div class="field">
+            <label>الخدمة العامة</label>
+            <select onchange="setField('personal','svc',this.value)">
+              ${["أدى","لم يؤدِ"].map(v => `<option ${state.personal.svc === v ? "selected":""}>${v}</option>`).join("")}
+            </select>
+          </div>
+        </div>
+        ${navHtml()}
+      `;
+    }
+
+    function renderEditableTable({ target, arrKey, rows, cols, group }) {
+      ensureArray(group, arrKey, rows);
+      return `
+        <table>
+          <thead><tr>${cols.map(c => `<th>${c.label}</th>`).join("")}</tr></thead>
+          <tbody>
+            ${Array.from({length: rows}).map((_, i) => `
+              <tr>
+                ${cols.map(c => `
+                  <td>
+                    <input value="${escapeHtml(state[group][arrKey][i]?.[c.key] || "")}"
+                      oninput="setArrayField('${group}','${arrKey}',${i},'${c.key}',this.value,${rows})">
+                  </td>
+                `).join("")}
+              </tr>
+            `).join("")}
+          </tbody>
+        </table>
+      `;
+    }
+
+    function renderPage1() {
+      $("page-1").innerHTML = `
+        ${sectionTitle("المؤهل الدراسي والخبرات السابقة")}
+        <div class="grid-2">
+          <div class="field">
+            <label>المؤهل الدراسي</label>
+            <input value="${escapeHtml(state.education.edu || "")}" oninput="setField('education','edu',this.value)">
+          </div>
+          <div class="field">
+            <label>الشعبة/التخصص</label>
+            <input value="${escapeHtml(state.education.spec || "")}" oninput="setField('education','spec',this.value)">
+          </div>
+          <div class="field">
+            <label>تاريخ التخرج</label>
+            <input type="date" value="${escapeHtml(state.education.grad || "")}" oninput="setField('education','grad',this.value)">
+          </div>
+          <div class="field">
+            <label>الجامعة / المعهد</label>
+            <input value="${escapeHtml(state.education.uni || "")}" oninput="setField('education','uni',this.value)">
+          </div>
+        </div>
+
+        <hr class="divider">
+        <div class="sub-title">الخبرات السابقة</div>
+        ${renderEditableTable({
+          target: "page-1",
+          arrKey: "exp",
+          rows: 3,
+          group: "education",
+          cols: [
+            { key: "job", label: "الوظيفة" },
+            { key: "emp", label: "جهة العمل" },
+            { key: "from", label: "من" },
+            { key: "to", label: "إلى" },
+            { key: "reason", label: "سبب الترك" },
+          ],
+        })}
+
+        <hr class="divider">
+        <div class="sub-title">برامج ودورات تدريبية</div>
+        ${renderEditableTable({
+          target: "page-1",
+          arrKey: "courses",
+          rows: 3,
+          group: "education",
+          cols: [
+            { key: "name", label: "البرنامج/الدورة" },
+            { key: "inst", label: "جهة التدريب" },
+            { key: "from", label: "من" },
+            { key: "to", label: "إلى" },
+            { key: "note", label: "ملاحظات" },
+          ],
+        })}
+        ${navHtml()}
+      `;
+    }
+
+    function renderPage2() {
+      const langs = [
+        ["الإنجليزية", "en"],
+        ["الفرنسية", "fr"],
+        ["أخرى", "ot"],
+      ];
+      const skills = ["sp", "rd", "wr"];
+      const levels = [["ممتاز", "ex"], ["جيد", "gd"], ["متوسط", "av"]];
+
+      $("page-2").innerHTML = `
+        ${sectionTitle("اللغات الأجنبية والمهارات")}
+        <div style="overflow-x:auto;margin-bottom:14px;">
+          <table style="font-size:12px;">
+            <thead>
+              <tr>
+                <th style="width:90px;">اللغة</th>
+                <th>ممتاز</th><th>محادثة</th><th>متوسط</th>
+                <th>ممتاز</th><th>قراءة</th><th>متوسط</th>
+                <th>ممتاز</th><th>كتابة</th><th>متوسط</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${langs.map(([name, key], i) => `
+                <tr>
+                  <td>
+                    ${key === "ot"
+                      ? `<input value="${escapeHtml(state.languages.otherLang || "")}" placeholder="اسم اللغة" oninput="setField('languages','otherLang',this.value)">`
+                      : name}
+                  </td>
+                  ${skills.map(s => levels.map(([_, lv]) => `
+                    <td style="text-align:center;">
+                      <input type="radio" name="${key}_${s}"
+                        ${state.languages.langs?.[`${key}_${s}`] === lv ? "checked" : ""}
+                        onchange="setLangLevel('${key}_${s}','${lv}')">
+                    </td>
+                  `).join("")).join("")}
+                </tr>
+              `).join("")}
+            </tbody>
+          </table>
+        </div>
+
+        <hr class="divider">
+        <div class="field" style="margin-bottom:12px;">
+          <label>المهارات والهوايات</label>
+          <textarea oninput="setField('languages','skills',this.value)">${escapeHtml(state.languages.skills || "")}</textarea>
+        </div>
+
+        <div class="field" style="margin-bottom:12px;">
+          <label>ملاحظات إضافية</label>
+          <textarea oninput="setField('languages','extra',this.value)">${escapeHtml(state.languages.extra || "")}</textarea>
+        </div>
+        ${navHtml()}
+      `;
+    }
+
+    function setLangLevel(key, value) {
+      if (!state.languages.langs) state.languages.langs = {};
+      state.languages.langs[key] = value;
+    }
+
+    function renderPage3() {
+      ensureArray("references", "refs", 3);
+      ensureArray("references", "family", 5);
+
+      $("page-3").innerHTML = `
+        ${sectionTitle("المراجع وبيانات الأقارب")}
+        <div class="sub-title" style="margin-top:0">أسماء وأرقام تليفونات ثلاثة أقارب يمكن الرجوع إليهم</div>
+        <table>
+          <thead>
+            <tr>
+              <th>#</th><th>الاسم</th><th>صلة القرابة</th><th>جهة العمل</th><th>التليفون</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${[0,1,2].map(i => `
+              <tr>
+                <td class="num-cell">${i + 1}</td>
+                <td><input value="${escapeHtml(state.references.refs[i].name || "")}" oninput="setArrayField('references','refs',${i},'name',this.value,3)"></td>
+                <td><input value="${escapeHtml(state.references.refs[i].rel || "")}" oninput="setArrayField('references','refs',${i},'rel',this.value,3)"></td>
+                <td><input value="${escapeHtml(state.references.refs[i].job || "")}" oninput="setArrayField('references','refs',${i},'job',this.value,3)"></td>
+                <td><input value="${escapeHtml(state.references.refs[i].phone || "")}" oninput="setArrayField('references','refs',${i},'phone',this.value,3)"></td>
+              </tr>
+            `).join("")}
+          </tbody>
+        </table>
+
+        <hr class="divider">
+        <div class="sub-title" style="margin-top:0">بيانات الأقارب العاملين بالشركة أو القطاع</div>
+        <table>
+          <thead>
+            <tr>
+              <th>#</th><th>الاسم</th><th>صلة القرابة</th><th>جهة العمل</th><th>الوظيفة</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${[0,1,2,3,4].map(i => `
+              <tr>
+                <td class="num-cell">${i + 1}</td>
+                <td><input value="${escapeHtml(state.references.family[i].name || "")}" oninput="setArrayField('references','family',${i},'name',this.value,5)"></td>
+                <td><input value="${escapeHtml(state.references.family[i].rel || "")}" oninput="setArrayField('references','family',${i},'rel',this.value,5)"></td>
+                <td><input value="${escapeHtml(state.references.family[i].job || "")}" oninput="setArrayField('references','family',${i},'job',this.value,5)"></td>
+                <td><input value="${escapeHtml(state.references.family[i].pos || "")}" oninput="setArrayField('references','family',${i},'pos',this.value,5)"></td>
+              </tr>
+            `).join("")}
+          </tbody>
+        </table>
+        ${navHtml()}
+      `;
+    }
+
+    function renderQuestion(q, qi) {
+      const selected = state.iqAns[qi];
+      const done = state.iqDone;
+
+      let visual = "";
+      if (q.type === "seq") {
+        visual = `<div class="seq-box">${q.seq}</div>`;
+      } else if (q.type === "matrix4x4" || q.type === "matrix3x3") {
+        const cols = q.matrix[0].length;
+        visual = `
+          <div class="matrix" style="grid-template-columns:repeat(${cols},42px)">
+            ${q.matrix.flat().map(v => `<div class="matrix-cell ${v === "?" ? "missing" : ""}">${v}</div>`).join("")}
+          </div>
+        `;
+      } else if (q.type === "wheel") {
+        visual = `
+          <div class="wheel-box">
+            <div class="wheel-grid">
+              ${q.wheels.map(w => `
+                <div class="wheel-card">
+                  <div class="wheel-label">${w.label}</div>
+                  <div class="wheel-mini">
+                    ${[
+                      ["A", w.A, ""], ["", "", ""], ["C", w.C, ""],
+                      ["", "", ""], ["CTR", w.center, "center"], ["", "", ""],
+                      ["E", w.E, ""]
+                    ].map(([lbl, val, type]) => lbl
+                      ? `<div class="wheel-item ${type === "center" ? "center" : (val === "?" ? "missing" : "")}">
+                           <div style="font-size:9px;opacity:.7">${lbl}</div>
+                           <div>${val}</div>
+                         </div>`
+                      : `<div></div>`
+                    ).join("")}
+                  </div>
+                </div>
+              `).join("")}
+            </div>
+          </div>
+        `;
+      } else if (q.type === "choice" && q.display) {
+        visual = `<div class="choice-display">${q.display}</div>`;
+      }
+
+      return `
+        <div style="border:1px solid var(--border);border-radius:10px;margin-bottom:10px;overflow:hidden;">
+          <div style="background:linear-gradient(90deg,#EDF2FB,#F5F7FC);padding:10px 14px;display:flex;gap:10px;border-bottom:1px solid var(--border);">
+            <div style="width:26px;height:26px;border-radius:50%;background:var(--primary);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;">${q.id}</div>
+            <div style="font-size:14px;font-weight:600;">${q.q}</div>
+          </div>
+          <div style="padding:12px 14px;">
+            ${visual}
+            <div class="options-grid">
+              ${q.opts.map((opt, oi) => {
+                let cls = "option-card";
+                let dotCls = "dot";
+                if (done) {
+                  if (oi === q.ans) {
+                    cls += " correct";
+                    dotCls += " correct";
+                  } else if (selected === oi) {
+                    cls += " wrong";
+                    dotCls += " wrong";
+                  }
+                } else if (selected === oi) {
+                  cls += " selected";
+                  dotCls += " selected";
+                }
+
+                return `
+                  <div class="${cls}" onclick="pickIQ(${qi}, ${oi})">
+                    <div class="${dotCls}"></div>
+                    <span>${opt}</span>
+                    ${done && oi === q.ans ? `<span style="margin-right:auto;font-size:11px;color:var(--green)">✓</span>` : ""}
+                  </div>
+                `;
+              }).join("")}
+            </div>
+            ${done ? `<div class="explain">💡 ${q.exp}</div>` : ""}
+          </div>
+        </div>
+      `;
+    }
+
+    function pickIQ(qi, oi) {
+      if (state.iqDone) return;
+      state.iqAns[qi] = oi;
+      renderPage4();
+    }
+
+    function submitIQ(auto = false) {
+      const answered = Object.keys(state.iqAns).length;
+      if (!auto && answered < IQ_QUESTIONS.length) {
+        if (!confirm(`أجبت على ${answered} من ${IQ_QUESTIONS.length} أسئلة. تريد التسليم؟`)) return;
+      }
+
+      stopIQTimer();
+      if (auto) state.iqTimeLeft = 0;
+      state.iqDone = true;
+      state.iqLocked = true;
+      renderAll();
+
+      if (auto) {
+        alert("انتهى وقت اختبار الذكاء. تم تسليم الإجابات تلقائياً وظهرت النتيجة.");
+      }
+    }
+
+    function renderPage4() {
+      const score = scoreIQ();
+      const pct = pctIQ(score);
+      const gradeAr = score >= 7 ? "ممتاز" : score >= 5 ? "جيد جداً" : score >= 4 ? "جيد" : "يحتاج مراجعة";
+
+      $("page-4").innerHTML = `
+        ${sectionTitle("اختبار الذكاء", state.iqDone ? `<span style="font-size:12px;font-weight:400;color:var(--text-muted)"> — النتيجة: ${score}/${IQ_QUESTIONS.length}</span>` : "")}
+
+        ${!state.iqDone ? `
+          <div class="iq-timer">
+            <div>⏱ مدة الاختبار 10 دقائق — بعد انتهاء الوقت يتم التسليم تلقائياً</div>
+            <div class="time" id="iqTimerValue">${formatIQTime(state.iqTimeLeft)}</div>
+          </div>
+        ` : `
+          <div class="iq-locked">
+            🔒 تم قفل اختبار الذكاء. لا يمكن تعديل الإجابات أو الرجوع للاختبار بعد الانتقال للملخص.
+          </div>
+        `}
+
+        ${state.iqDone ? `
+          <div class="score-panel">
+            <div class="score-big">${score}</div>
+            <div class="score-split">/ ${IQ_QUESTIONS.length}</div>
+            <div class="score-meta">
+              <div>نتيجة اختبار الذكاء</div>
+              <div class="score-grade">${pct}% — ${gradeAr}</div>
+              <div class="progress"><div style="width:${pct}%"></div></div>
+            </div>
+          </div>
+        ` : ""}
+
+        ${IQ_QUESTIONS.map(renderQuestion).join("")}
+
+        <div class="nav">
+          <div></div>
+          ${state.iqDone ? "" : `<button class="btn accent" onclick="submitIQ()">تسليم الاختبار ✓</button>`}
+        </div>
+
+        <div class="nav" style="margin-top:16px;">
+          <button class="btn prev" onclick="goStep(-1)">→ السابق</button>
+          ${state.iqDone ? `<button class="btn primary" onclick="goStep(1)">التالي ←</button>` : `<div></div>`}
+        </div>
+      `;
+
+      if (state.cur === 4 && !state.iqDone) {
+        startIQTimer();
+      }
+    }
+
+    async function sendToSheets() {
+      state.sendStatus = "sending";
+      state.sendError = "";
+      renderPage5();
+
+      const score = scoreIQ();
+      const pct = pctIQ(score);
+      const grade = gradeIQ(score);
+
+      const payload = {
+        timestamp: new Date().toLocaleString("ar-EG"),
+        name: state.personal.name || "",
+        nationality: state.personal.nat || "",
+        religion: state.personal.rel || "",
+        dob: state.personal.dob || "",
+        birthplace: state.personal.bplace || "",
+        address: state.personal.addr || "",
+        marital: state.personal.marital || "",
+        phone: state.personal.phone || "",
+        national_id: state.personal.nid || "",
+        job_applied: state.personal.job || "",
+        military: state.personal.mil || "",
+        education: state.education.edu || "",
+        specialization: state.education.spec || "",
+        graduation: state.education.grad || "",
+        university: state.education.uni || "",
+        iq_score: String(score),
+        iq_pct: `${pct}%`,
+        iq_grade: grade,
+      };
+
+      const scriptUrl = GASCOOL_SCRIPT_URL.trim();
+      if (!scriptUrl || !scriptUrl.includes("script.google.com")) {
+        state.sendStatus = "error";
+        state.sendError = "رابط إرسال البيانات غير مضبوط داخل الكود.";
+        renderPage5();
+        return;
+      }
+
+      try {
+        const params = new URLSearchParams(payload);
+        await new Promise((resolve, reject) => {
+          const img = new Image();
+          let done = false;
+
+          const finish = () => {
+            if (done) return;
+            done = true;
+            resolve();
+          };
+
+          img.onload = finish;
+          img.onerror = finish;
+          img.src = scriptUrl + "?" + params.toString();
+
+          setTimeout(() => {
+            if (!done) reject(new Error("timeout"));
+          }, 8000);
+        });
+
+        state.sendStatus = "success";
+        state.sendError = "";
+      } catch (e) {
+        state.sendStatus = "error";
+        state.sendError = "فشل إرسال البيانات إلى Google Sheets. تأكدي من رابط الـ Web App ثم حاولي مرة أخرى.";
+      }
+
+      renderPage5();
+    }
+
+    function renderPage5() {
+      const score = scoreIQ();
+      const pct = pctIQ(score);
+      const grade = gradeIQ(score);
+
+      $("page-5").innerHTML = `
+        ${sectionTitle("ملخص طلب التقديم")}
+
+        <div class="stats-grid">
+          <div class="stat">
+            <div class="stat-label">اسم المتقدم</div>
+            <div class="stat-value">${escapeHtml(state.personal.name || "—")}</div>
+          </div>
+          <div class="stat">
+            <div class="stat-label">الوظيفة المطلوبة</div>
+            <div class="stat-value">${escapeHtml(state.personal.job || "—")}</div>
+          </div>
+          <div class="stat">
+            <div class="stat-label">المؤهل الدراسي</div>
+            <div class="stat-value">${escapeHtml(state.education.edu || "—")}</div>
+          </div>
+          <div class="stat">
+            <div class="stat-label">تاريخ التقديم</div>
+            <div class="stat-value">${new Date().toLocaleDateString("ar-EG")}</div>
+          </div>
+        </div>
+
+        <div class="score-panel">
+          <div class="score-big">${score}</div>
+          <div class="score-split">/ ${IQ_QUESTIONS.length}</div>
+          <div class="score-meta">
+            <div>IQ Test Result</div>
+            <div class="score-grade">${pct}% — ${grade}</div>
+            <div class="progress"><div style="width:${pct}%"></div></div>
+          </div>
+        </div>
+
+        ${state.sendStatus === "success" ? `<div class="alert success">✅ تم إرسال البيانات إلى Google Sheets بنجاح</div>` : ""}
+        ${state.sendStatus === "error" ? `<div class="alert error">❌ ${escapeHtml(state.sendError)}</div>` : ""}
+
+        <div class="note-box">
+          📋 Form No: GC-P-11/F2 | Issue Date: 5/5/2015 | Approved by Chairman & Managing Director
+        </div>
+
+        <div class="nav" style="justify-content:space-between;">
+          <div></div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;">
+            <button class="btn accent" onclick="window.print()">🖨 طباعة</button>
+            <button class="btn primary" onclick="sendToSheets()" ${state.sendStatus === "sending" ? "disabled" : ""}>
+              ${state.sendStatus === "sending" ? "⏳ جاري الإرسال..." : "📤 إرسال البيانات"}
+            </button>
+          </div>
+        </div>
+
+        ${state.iqLocked ? "" : `
+          <div style="margin-top:12px;">
+            <button class="btn prev" onclick="goStep(-1)">→ السابق</button>
+          </div>
+        `}
+      `;
+    }
+
+    function renderAll() {
+      renderSteps();
+      document.querySelectorAll(".page").forEach((p, i) => {
+        p.classList.toggle("active", i === state.cur);
+      });
+      renderPage0();
+      renderPage1();
+      renderPage2();
+      renderPage3();
+      renderPage4();
+      renderPage5();
+    }
+
+
+    renderAll();
+  </script>
+</body>
+</html>
